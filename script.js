@@ -1,74 +1,103 @@
-window.addEventListener('scroll', onScroll)
+window.addEventListener("DOMContentLoaded", () => {
+  const navigation = document.querySelector("nav");
+  const backToTopButton = document.querySelector("#backToTopButton");
 
-onScroll()
-function onScroll() {
-  showNavOnScroll()
-  showBackToTopButtonOnScroll()
+  const home = document.getElementById("home");
+  const services = document.getElementById("services");
+  const about = document.getElementById("about");
+  const agendamento = document.getElementById("agendamento");
 
-  activateMenuAtCurrentSection(home)
-  activateMenuAtCurrentSection(services)
-  activateMenuAtCurrentSection(about)
-  activateMenuAtCurrentSection(contact)
-}
+  const sections = [home, services, about, agendamento];
 
-function activateMenuAtCurrentSection(section) {
-  const targetLine = scrollY + innerHeight / 2
+  window.addEventListener("scroll", onScroll);
+  onScroll();
 
-  const sectionTop = section.offsetTop
-  const sectionHeight = section.offsetHeight
-  const sectionTopReachOrPassedTargetline = targetLine >= sectionTop
+  function onScroll() {
+    showNavOnScroll();
+    showBackToTopButtonOnScroll();
 
-
-  const sectionEndsAt = sectionTop + sectionHeight
-  const sectionEndPassedTargetline = sectionEndsAt <= targetLine
-
-  const sectionBoundaries =
-    sectionTopReachOrPassedTargetline && !sectionEndPassedTargetline
-
-  const sectionId = section.getAttribute('id')
-  const menuElement = document.querySelector(`.menu a[href*=${sectionId}]`)
-
-  menuElement.classList.remove('active')
-  if (sectionBoundaries) {
-    menuElement.classList.add('active')
+    sections.forEach((section) => {
+      if (section) activateMenuAtCurrentSection(section);
+    });
   }
-}
 
-function showNavOnScroll() {
-  if (scrollY > 0) {
-    navigation.classList.add('scroll')
-  } else {
-    navigation.classList.remove('scroll')
+  function activateMenuAtCurrentSection(section) {
+    const targetLine = scrollY + innerHeight / 2;
+
+    const sectionTop = section.offsetTop;
+    const sectionHeight = section.offsetHeight;
+
+    const sectionTopReachOrPassedTargetline = targetLine >= sectionTop;
+    const sectionEndPassedTargetline = sectionTop + sectionHeight <= targetLine;
+
+    const sectionBoundaries =
+      sectionTopReachOrPassedTargetline && !sectionEndPassedTargetline;
+
+    const sectionId = section.getAttribute("id");
+    const menuElement = document.querySelector(`.menu a[href*=${sectionId}]`);
+
+    if (menuElement) {
+      menuElement.classList.remove("active");
+      if (sectionBoundaries) {
+        menuElement.classList.add("active");
+      }
+    }
   }
-}
 
-function showBackToTopButtonOnScroll() {
-  if (scrollY > 550) {
-    backToTopButton.classList.add('show')
-  } else {
-    backToTopButton.classList.remove('show')
+   function fecharMenuERedirecionar() {
+    closeMenu();
+    setTimeout(() => {
+      window.location.href = "agendamento.html";
+    }, 300); // tempo para o menu fechar com transição, se quiser
   }
-}
 
-function openMenu() {
-  document.body.classList.add('menu-expanded')
-}
+  const form = document.getElementById("formAgendamento");
+  if (form) {
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      alert("Consulta agendada com sucesso!");
+      form.reset();
+    });
+  }
 
-function closeMenu() {
-  document.body.classList.remove('menu-expanded')
-}
+  function showNavOnScroll() {
+    if (scrollY > 0 && navigation) {
+      navigation.classList.add("scroll");
+    } else if (navigation) {
+      navigation.classList.remove("scroll");
+    }
+  }
 
-ScrollReveal({
-  origin: 'top',
-  distance: '30px',
-  duration: 700
-}).reveal(`
-  #home, 
-  #home img, 
-  #home .stats, 
-  #services,
-  #services header,
-  #services .card
-  #about, 
-  #about header, 
-  #about .content`)
+  function showBackToTopButtonOnScroll() {
+    if (scrollY > 550 && backToTopButton) {
+      backToTopButton.classList.add("show");
+    } else if (backToTopButton) {
+      backToTopButton.classList.remove("show");
+    }
+  }
+
+  window.openMenu = function () {
+    document.body.classList.add("menu-expanded");
+  };
+
+  window.closeMenu = function () {
+    document.body.classList.remove("menu-expanded");
+  };
+
+  ScrollReveal({
+    origin: "top",
+    distance: "30px",
+    duration: 700,
+  }).reveal(`
+    #home, 
+    #home img, 
+    #home .stats, 
+    #services,
+    #services header,
+    #services .card,
+    #about, 
+    #about header, 
+    #about .content,
+    #agendamento
+  `);
+});

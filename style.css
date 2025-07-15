@@ -97,6 +97,55 @@ section header h2 {
 }
 
 
+.agendamento {
+  margin-top: 3rem;
+  padding: 5rem 2rem;
+  background-color: var(--brand-light-2);
+}
+
+.agendamento h2 {
+  font-size: 3rem;
+  margin-bottom: 3rem;
+  text-align: center;
+  color: var(--primary-color);
+}
+
+.agendamento form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.agendamento input,
+.agendamento select,
+.agendamento textarea {
+  padding: 1.2rem;
+  font-size: 1.6rem;
+  border-radius: 0.8rem;
+  border: 1px solid #ccc;
+}
+
+.agendamento .button {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 1.5rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 4rem;
+  cursor: pointer;
+  transition: filter 0.3s;
+}
+
+.agendamento .button:hover {
+  filter: brightness(1.2);
+}
+
+
+
+
+
 .button {
   background: var(--primary-color);
 
@@ -174,6 +223,12 @@ nav .wrapper {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+nav.scroll {
+  background: var(--primary-color);
+  box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.3);
+  transition: box-shadow 0.3s ease-in-out;
 }
 
 nav.scroll {
